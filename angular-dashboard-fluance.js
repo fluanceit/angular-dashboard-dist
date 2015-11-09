@@ -1,3 +1,19 @@
+(function() {
+    'use strict';
+
+    /**
+     *
+     * @ngdoc module
+     * @name dashboard
+     * @module dashboard
+     * @packageName dashboard
+     * @description
+     * Main module to display angular dashboard fluance.
+     *
+     **/
+    angular.module('dashboard', []);
+})();
+
 /**
  * Mycockpit Directive
  */
@@ -13,7 +29,7 @@
                     'component': '=',
                     'dashboard': '='
                 },
-                templateUrl: 'src/dashboard.component.directive.html',
+                templateUrl: 'dashboard.component.directive.html',
                 link: function(scope, element, attrs) {
                     scope.data = scope.component;
 
@@ -102,7 +118,7 @@
                     'columns': '@',
                     'columnsMinWidth': '@'
                 },
-                templateUrl: 'src/dashboard.directive.html',
+                templateUrl: 'dashboard.directive.html',
                 controller: ['$scope', function(scope) {
 
                     // Get current width of parent
@@ -250,22 +266,6 @@
         }
 
     }
-})();
-
-(function() {
-    'use strict';
-
-    /**
-     *
-     * @ngdoc module
-     * @name dashboard
-     * @module dashboard
-     * @packageName dashboard
-     * @description
-     * Main module to display angular dashboard fluance.
-     *
-     **/
-    angular.module('dashboard', []);
 })();
 
 (function() {
@@ -548,5 +548,5 @@
     }
 })();
 
-angular.module("templates").run(["$templateCache", function($templateCache) {$templateCache.put("dashboard.component.directive.html","<div id=\"component.id\" class=\"dashboard-component\" data-ng-class=\"{\'shake-effect\': dashboard.isStateSorting}\"><div class=\"default\" data-ng-include=\"component.templates.default\" data-ng-if=\"!dashboard.isExtended && !component.displaySettings\"></div><div class=\"extended\" data-ng-include=\"component.templates.extended\" data-ng-if=\"component.isExtended\"></div><div class=\"settings\" data-ng-include=\"component.templates.settings\" data-ng-if=\"component.displaySettings && !dashboard.isExtended\"></div></div>");
+angular.module("dashboard").run(["$templateCache", function($templateCache) {$templateCache.put("dashboard.component.directive.html","<div id=\"component.id\" class=\"dashboard-component\" data-ng-class=\"{\'shake-effect\': dashboard.isStateSorting}\"><div class=\"default\" data-ng-include=\"component.templates.default\" data-ng-if=\"!dashboard.isExtended && !component.displaySettings\"></div><div class=\"extended\" data-ng-include=\"component.templates.extended\" data-ng-if=\"component.isExtended\"></div><div class=\"settings\" data-ng-include=\"component.templates.settings\" data-ng-if=\"component.displaySettings && !dashboard.isExtended\"></div></div>");
 $templateCache.put("dashboard.directive.html","<div id=\"{{ id }}\" class=\"dashboard-container\" data-ng-style=\"{ \'width\': width }\"><div id=\"column{{$index+0}}\" class=\"column\" data-ng-class=\"{ placeholder : dashboard.isStateSorting }\" data-ng-repeat=\"column in dashboard.grid\" data-ng-style=\"{ \'max-width\': columnsWidth, \'width\': columnsWidth, \'height\': columnsWidth }\"><div class=\"component\" data-ng-repeat=\"component in column\"><display-component component=\"component\" dashboard=\"dashboard\"></display-component></div></div><div class=\"clearfix\"></div></div>");}]);
