@@ -172,6 +172,8 @@
 
                     }, true);
 
+
+                    // Doing some touch stuff ...
                     var theElement = document.getElementById(scope['id']);
 
                     var mylatesttap = 0;
@@ -360,7 +362,6 @@
             function drawGrid() {
                 // If is on sorting mode, we stop it
                 if (dashboardObject.isStateSorting) {
-
                     dashboardObject.toggleSortable();
                 }
 
@@ -489,8 +490,16 @@
                 var component = dashboardObject.grid[oldColumn][evt.oldIndex];
                 // Remove old component
                 dashboardObject.grid[oldColumn].splice(evt.oldIndex, 1);
+
+                if (evt.newIndex === 0) {
+                    console.log(dashboardObject.grid[newColumn]);
+                }
                 // Add component to new location
                 dashboardObject.grid[newColumn].splice(evt.newIndex, 0, component);
+
+                if (evt.newIndex === 0) {
+                    console.log(dashboardObject.grid[newColumn]);
+                }
 
             }
 
@@ -547,5 +556,5 @@
     }
 })();
 
-angular.module("dashboard").run(["$templateCache", function($templateCache) {$templateCache.put("dashboard.component.directive.html","<div id=\"component.id\" class=\"dashboard-component\" data-ng-class=\"{\'shake-effect\': dashboard.isStateSorting}\"><div class=\"default\" data-ng-include=\"component.templates.default\" data-ng-if=\"!dashboard.isExtended && !component.displaySettings\"></div><div class=\"extended\" data-ng-include=\"component.templates.extended\" data-ng-if=\"component.isExtended\"></div><div class=\"settings\" data-ng-include=\"component.templates.settings\" data-ng-if=\"component.displaySettings && !dashboard.isExtended\"></div></div>");
-$templateCache.put("dashboard.directive.html","<div id=\"{{ id }}\" class=\"dashboard-container\" data-ng-style=\"{ \'width\': width }\"><div id=\"column{{$index+0}}\" class=\"column\" data-ng-class=\"{ placeholder : dashboard.isStateSorting }\" data-ng-repeat=\"column in dashboard.grid\" data-ng-style=\"{ \'max-width\': columnsWidth, \'width\': columnsWidth, \'height\': columnsWidth }\"><div class=\"component\" data-ng-repeat=\"component in column\"><display-component component=\"component\" dashboard=\"dashboard\"></display-component></div></div><div class=\"clearfix\"></div></div>");}]);
+angular.module("dashboard").run(["$templateCache", function($templateCache) {$templateCache.put("dashboard.component.directive.html","<div id=\"component.id\" class=\"dashboard-component\"><div class=\"default\" data-ng-include=\"component.templates.default\" data-ng-if=\"!dashboard.isExtended && !component.displaySettings\"></div><div class=\"extended\" data-ng-include=\"component.templates.extended\" data-ng-if=\"component.isExtended\"></div><div class=\"settings\" data-ng-include=\"component.templates.settings\" data-ng-if=\"component.displaySettings && !dashboard.isExtended\"></div></div>");
+$templateCache.put("dashboard.directive.html","<div id=\"{{ id }}\" class=\"dashboard-container\" data-ng-style=\"{ \'width\': width }\"><div id=\"column{{$index+0}}\" class=\"column\" data-ng-class=\"{ \'placeholder\' : dashboard.isStateSorting, \'shake-effect\': dashboard.isStateSorting }\" data-ng-repeat=\"column in dashboard.grid\" data-ng-style=\"{ \'max-width\': columnsWidth, \'width\': columnsWidth }\"><div class=\"component\" data-ng-repeat=\"component in column\"><display-component component=\"component\" dashboard=\"dashboard\"></display-component></div></div><div class=\"clearfix\"></div></div>");}]);
