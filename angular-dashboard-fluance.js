@@ -37,26 +37,45 @@
                         angular.extend(scope, scope.component.scope);
                     }
 
+                    scope.component.states.default.controller();
+
                     scope.openExtended = function() {
                         if (!scope.dashboard.isStateSorting) {
                             scope.dashboard.isExtended = true;
                             scope.component.isExtended = true;
+                            // Execute JS
+                            if (scope.component.states.extended && scope.component.states.extended.controller) {
+                                scope.component.states.extended.controller();
+                            }
+
                         }
                     };
                     scope.closeExtended = function() {
                         if (!scope.dashboard.isStateSorting) {
                             scope.dashboard.isExtended = false;
                             scope.component.isExtended = false;
+                            if (scope.component.states.default && scope.component.states.default.controller) {
+                                scope.component.states.default.controller();
+                            }
+
                         }
                     };
                     scope.openSettings = function() {
                         if (!scope.dashboard.isStateSorting) {
                             scope.component.displaySettings = true;
+                            if (scope.component.states.settings && scope.component.states.settings.controller) {
+                                scope.component.states.settings.controller();
+                            }
+
                         }
                     };
                     scope.closeSettings = function() {
                         if (!scope.dashboard.isStateSorting) {
                             scope.component.displaySettings = false;
+                            if (scope.component.states.default && scope.component.states.default.controller) {
+                                scope.component.states.default.controller();
+                            }
+
                         }
                     };
                 }
@@ -561,5 +580,5 @@
     }
 })();
 
-angular.module("dashboard").run(["$templateCache", function($templateCache) {$templateCache.put("dashboard.component.directive.html","<div id=\"component.id\" class=\"dashboard-component\"><div class=\"default\" data-ng-include=\"component.templates.default\" data-ng-if=\"!dashboard.isExtended && !component.displaySettings\"></div><div class=\"extended\" data-ng-include=\"component.templates.extended\" data-ng-if=\"component.isExtended\"></div><div class=\"settings\" data-ng-include=\"component.templates.settings\" data-ng-if=\"component.displaySettings && !dashboard.isExtended\"></div></div>");
+angular.module("dashboard").run(["$templateCache", function($templateCache) {$templateCache.put("dashboard.component.directive.html","<div id=\"component.id\" class=\"dashboard-component\"><div class=\"default\" data-ng-include=\"component.states.default.template\" data-ng-if=\"!dashboard.isExtended && !component.displaySettings\"></div><div class=\"extended\" data-ng-include=\"component.states.extended.template\" data-ng-if=\"component.isExtended\"></div><div class=\"settings\" data-ng-include=\"component.states.settings.template\" data-ng-if=\"component.displaySettings && !dashboard.isExtended\"></div></div>");
 $templateCache.put("dashboard.directive.html","<div id=\"{{ id }}\" class=\"dashboard-container\" data-ng-style=\"{ \'width\': width }\"><div id=\"column{{$index+0}}\" class=\"dashboard-column\" data-ng-class=\"{ \'placeholder\' : dashboard.isStateSorting, \'shake-effect\': dashboard.isStateSorting }\" data-ng-repeat=\"column in dashboard.grid\" data-ng-style=\"{ \'max-width\': columnsWidth, \'width\': columnsWidth }\"><div class=\"component\" data-ng-repeat=\"component in column\"><display-component component=\"component\" dashboard=\"dashboard\"></display-component></div></div><div class=\"clearfix\"></div></div>");}]);
