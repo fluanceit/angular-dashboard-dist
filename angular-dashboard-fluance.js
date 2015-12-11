@@ -222,7 +222,6 @@
 
     /**
      * @ngdoc service
-     * @module dashboard
      * @name dashboardObject
      * @description
      *
