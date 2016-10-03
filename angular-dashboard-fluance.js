@@ -116,7 +116,7 @@
                 },
                 templateUrl: 'dashboard.directive.html',
                 controller: ['$scope', function(scope) {
-                    var screenWidth = $( window ).width();
+                    currentWidth = $( window ).width();
 
                     scope.dashboard = dashboardFactory.get(scope.id);
 
@@ -131,11 +131,13 @@
                     // On resize we refresh
                     window.addEventListener('resize', function(event) {
 
-                        if ($( window ).width() !== screenWidth) {
+                        if ($( window ).width() !== currentWidth) {
+                            // update currentWidth with current window width
+                            currentWidth = $( window ).width();
                             clearTimeout(timeout);
                             timeout = setTimeout(function () {
-                                    scope.dashboard.refresh();
-                                    scope.$apply();
+                                scope.dashboard.refresh();
+                                scope.$apply();
                             }, 150);
                         }
                     }, true);
