@@ -41,6 +41,11 @@
 
                     if (scope.component.states.default && scope.component.states.default.controller) {
                         scope.component.states.default.controller();
+
+                        // update state 'isSorting' for the component
+                        if(scope.component.states.default.refreshStateSorting) {
+                            scope.component.states.default.refreshStateSorting(scope.dashboard.isStateSorting);
+                        }
                     }
 
                     scope.openExtended = function(event) {
@@ -558,6 +563,13 @@
                     instance.sortable.forEach(function(sort) {
                         sort.option('disabled', !instance.isStateSorting);
                     });
+
+                    // update 'isSorting' state of all components
+                    instance.components.forEach(function(component) {
+                        if(component.states.default.refreshStateSorting) {
+                            component.states.default.refreshStateSorting(instance.isStateSorting);
+                        }
+                    });
                 }
             }
 
@@ -584,5 +596,5 @@
     }
 })();
 
-angular.module("dashboard").run(["$templateCache", function($templateCache) {$templateCache.put("dashboard.component.directive.html","<div id=\"component.id\" class=\"dashboard-component\"><div class=\"default\" data-ng-include=\"component.states.default.template\" data-ng-if=\"!dashboard.isExtended && !component.displaySettings\"></div><div class=\"extended\" data-ng-include=\"component.states.extended.template\" data-ng-if=\"component.isExtended\"></div><div class=\"settings\" data-ng-include=\"component.states.settings.template\" data-ng-if=\"component.displaySettings && !dashboard.isExtended\"></div></div>");
+angular.module("dashboard").run(["$templateCache", function($templateCache) {$templateCache.put("dashboard.component.directive.html","<div id=\"{{component.id}}\" class=\"dashboard-component\"><div class=\"default\" data-ng-include=\"component.states.default.template\" data-ng-if=\"!dashboard.isExtended && !component.displaySettings\"></div><div class=\"extended\" data-ng-include=\"component.states.extended.template\" data-ng-if=\"component.isExtended\"></div><div class=\"settings\" data-ng-include=\"component.states.settings.template\" data-ng-if=\"component.displaySettings && !dashboard.isExtended\"></div></div>");
 $templateCache.put("dashboard.directive.html","<div id=\"dashboard-{{ id }}\" class=\"dashboard-container\" data-ng-style=\"{ \'width\': dashboard.options.width }\"><div id=\"column{{$index+0}}\" class=\"dashboard-column\" data-ng-class=\"{ \'placeholder\' : dashboard.isStateSorting, \'shake-effect\': dashboard.isStateSorting }\" data-ng-repeat=\"column in dashboard.grid\" data-ng-style=\"{ \'max-width\': dashboard.columnsWidth, \'width\': dashboard.columnsWidth }\"><div class=\"component\" data-ng-repeat=\"component in column\"><display-component component=\"component\" dashboard=\"dashboard\"></display-component></div></div><div class=\"clearfix\"></div></div>");}]);
