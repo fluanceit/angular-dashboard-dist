@@ -589,6 +589,11 @@
                 instance.components.forEach(function(component) {
                     if (component.isExtended) {
                         component.isExtended = false;
+
+                        // change component state to 'default'
+                        if (component.states.default && component.states.default.controller) {
+                            component.states.default.controller();
+                        }
                     }
                 });
             }
@@ -596,5 +601,5 @@
     }
 })();
 
-angular.module("dashboard").run(["$templateCache", function($templateCache) {$templateCache.put("dashboard.component.directive.html","<div id=\"{{component.id}}\" class=\"dashboard-component\"><div class=\"default\" data-ng-include=\"component.states.default.template\" data-ng-if=\"!dashboard.isExtended && !component.displaySettings\"></div><div class=\"extended\" data-ng-include=\"component.states.extended.template\" data-ng-if=\"component.isExtended\"></div><div class=\"settings\" data-ng-include=\"component.states.settings.template\" data-ng-if=\"component.displaySettings && !dashboard.isExtended\"></div></div>");
+angular.module("dashboard").run(["$templateCache", function($templateCache) {$templateCache.put("dashboard.component.directive.html","<div id=\"{{component.id}}\" class=\"dashboard-component\"><div class=\"default\" data-ng-include=\"component.states.default.template\" data-ng-if=\"!dashboard.isExtended && !component.displaySettings\"></div><div class=\"extended\" data-ng-include=\"component.states.extended.template\" data-ng-if=\"component.isExtended\"></div><div class=\"settings\" data-ng-include=\"component.states.settings.template\" data-ng-if=\"component.displaySettings && !dashboard.isExtended && !component.isExtended\"></div></div>");
 $templateCache.put("dashboard.directive.html","<div id=\"dashboard-{{ id }}\" class=\"dashboard-container\" data-ng-style=\"{ \'width\': dashboard.options.width }\"><div id=\"column{{$index+0}}\" class=\"dashboard-column\" data-ng-class=\"{ \'placeholder\' : dashboard.isStateSorting, \'shake-effect\': dashboard.isStateSorting }\" data-ng-repeat=\"column in dashboard.grid\" data-ng-style=\"{ \'max-width\': dashboard.columnsWidth, \'width\': dashboard.columnsWidth }\"><div class=\"component\" data-ng-repeat=\"component in column\"><display-component component=\"component\" dashboard=\"dashboard\"></display-component></div></div><div class=\"clearfix\"></div></div>");}]);
