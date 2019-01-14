@@ -1,0 +1,9 @@
+{
+  "name": "bower-angular-dashboard",
+  "version": "1.0.8",
+  "description": "Distribution of dashboard interface for angularjs (1.x) applications.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fluanceit/bower-angular-dashboard.git"
+  }
+}
